@@ -60,18 +60,18 @@ export default class Stage extends GameElement {
     if (event.code === "Space") this.handleShoot();
   }
 
-  shootTimeout: number | null = null;
+  resetTimeout: number | null = null;
   handleShoot(): void {
-    if (this.shootTimeout) clearTimeout(this.shootTimeout);
-    this.shootTimeout = setTimeout(() => {
-      if (this.state.status === "gameover") {
+    if (this.state.status === "gameover") {
+      if (this.resetTimeout) clearTimeout(this.resetTimeout);
+      this.resetTimeout = setTimeout(() => {
         // @ts-ignore
         this.propagateSetup();
-      } else {
-        this.playerBall.shoot();
-      }
-      this.shootTimeout = null;
-    }, 100);
+        this.resetTimeout = null;
+      }, 1000);
+    } else {
+      this.playerBall.shoot();
+    }
   }
 
   handleMiss(): void {
