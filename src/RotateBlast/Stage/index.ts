@@ -68,7 +68,7 @@ export default class Stage extends GameElement {
         // @ts-ignore
         this.propagateSetup();
         this.resetTimeout = null;
-      }, 1000);
+      }, 200);
     } else {
       this.playerBall.shoot();
     }
