@@ -60,13 +60,18 @@ export default class Stage extends GameElement {
     if (event.code === "Space") this.handleShoot();
   }
 
+  shootTimeout: number | null = null;
   handleShoot(): void {
-    if (this.state.status === "gameover") {
-      // @ts-ignore
-      this.propagateSetup();
-    } else {
-      this.playerBall.shoot();
-    }
+    if (this.shootTimeout) clearTimeout(this.shootTimeout);
+    this.shootTimeout = setTimeout(() => {
+      if (this.state.status === "gameover") {
+        // @ts-ignore
+        this.propagateSetup();
+      } else {
+        this.playerBall.shoot();
+      }
+      this.shootTimeout = null;
+    }, 100);
   }
 
   handleMiss(): void {
